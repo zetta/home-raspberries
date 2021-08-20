@@ -1,0 +1,9 @@
+---
+
+- name: Mount the data file system
+  mount:
+    path: /media/data
+    src: /dev/sdb1
+    fstype: ntfs
+    opts: uid=1000,gid=1000
+    state: mounted

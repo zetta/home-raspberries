@@ -1,0 +1,5 @@
+---
+debian_packages:
+  # xrdp: absent
+  # apt-transport-https: present
+  nginx: present

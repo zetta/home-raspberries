@@ -1,0 +1,32 @@
+---
+
+# - name: disable cloud init for networking
+#   copy:
+#     dest: /etc/cloud/cloud.cfg.d/99-disable-network-config.cfg
+#     content: "network: {config: disabled}"
+
+# - name: configure networking 
+#   copy:
+#     dest: /etc/netplan/01-netcfg.yaml
+#     content: |
+#       network:
+#         version: 2
+#         renderer: networkd
+#         ethernets:
+#           eth0:
+#             dhcp4: no
+#             addresses:
+#               - {{ ip }}/24
+#             gateway4: {{ gateway }}
+#             nameservers:
+#                 addresses: [8.8.8.8, 1.1.1.1]
+
+- name: install public key 
+  copy:
+    dest: /home/ubuntu/.ssh/authorized_keys
+    src: /root/.ssh/id_rsa.local.pub
+
+# - name: apply changes
+#   command: sudo netplan apply
+#   async: 45
+#   poll: 0

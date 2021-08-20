@@ -1,0 +1,61 @@
+---
+
+- name: ensure dirmngr is present
+  package: 
+    name: dirmngr
+    state: present
+
+- name: add key
+  apt_key:
+    keyserver: keyserver.ubuntu.com
+    id: 2C0D3C0F
+    state: present
+
+## got the content from http://goo.gl/vewCLL
+- name: Add source repository into sources list
+  apt_repository:
+    repo: deb http://giteduberger.fr rpimonitor/
+    state: present
+    filename: rpimonitor
+
+- name: install rpimonitor
+  package: 
+    name: rpimonitor
+    state: present
+
+- name: configure networking 1/5
+  replace: 
+    path: /etc/rpimonitor/template/network.conf
+    regexp: '^#(dynamic.1.*)'
+    replace: '\1'
+
+- name: configure networking 2/5
+  replace: 
+    path: /etc/rpimonitor/template/network.conf
+    regexp: '^#(.*Ethernet Sent.*)'
+    replace: '\1'
+
+- name: configure networking 3/5
+  replace: 
+    path: /etc/rpimonitor/template/network.conf
+    regexp: '^#(web.statistics.1.content)'
+    replace: '\1'
+
+- name: configure networking 4/5
+  replace: 
+    path: /etc/rpimonitor/template/network.conf
+    regexp: '^[^#](.*To activate network monitoring.*)'
+    replace: '#\1'
+
+- name: configure networking 5/5
+  replace: 
+    path: /etc/rpimonitor/template/network.conf
+    regexp: '^(web.status.1.content.8.line.[23])'
+    replace: '#\1'
+
+
+- name: restart service
+  service: 
+    name: rpimonitor
+    state: restarted
+

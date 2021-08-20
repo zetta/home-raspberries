@@ -1,0 +1,42 @@
+---
+
+# curl https://downloads.plex.tv/plex-keys/PlexSign.key | sudo apt-key add -
+- name: Add PlexServer official PGP key 
+  apt_key:
+    url: https://downloads.plex.tv/plex-keys/PlexSign.key
+    state: present
+
+# echo deb http://mirrordirector.raspbian.org/raspbian/ jessie main contrib non-free rpi | sudo tee /etc/apt/sources.list.d/plexmediaserver.list
+#      deb https://downloads.plex.tv/repo/deb public main
+- name: Add source repository into sources list
+  apt_repository:
+    repo: deb https://downloads.plex.tv/repo/deb public main
+    state: present
+    filename: plexmediaserver
+
+- name: update
+  apt:
+    cache_valid_time: 3600
+    update_cache: yes
+
+- name: ensure plexmediaserver is installed
+  package:
+    name: plexmediaserver
+    state: present
+
+# - name: 
+
+- name: ensure service is up 
+  service:
+    name: plexmediaserver
+    state: started
+
+#get the file from https://www.plex.tv/media-server-downloads/
+# - name: download the package
+#   get_url: 
+#     url: https://downloads.plex.tv/plex-media-server-new/1.22.0.4163-d8c4875dd/debian/plexmediaserver_1.22.0.4163-d8c4875dd_arm64.deb
+#     dest: /home/ubuntu/plexmediaserver.deb
+
+# - name: install the package
+#   apt: 
+#     deb: /home/ubuntu/plexmediaserver.deb

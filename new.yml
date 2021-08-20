@@ -1,0 +1,10 @@
+---
+
+- hosts: new
+  become: yes
+  roles: 
+    - role: raspberry_ubuntu
+      # vars: 
+      #   - ip: 192.168.1.25
+      #   - gateway: 192.168.1.1
+

@@ -1,0 +1,26 @@
+---
+
+- hosts: controller.local
+  become: yes
+  roles: 
+     # - role: package
+     #   vars:
+     #     packages:
+     #        apt-transport-https: present
+     #        ca-certificates: present
+     #        curl: present
+     #        kubelet: present
+     #        kubeadm: present
+     #        kubectl: present
+    # - plexmediaserver
+    # - deluge
+    # - rpimonitor
+    - kubeadm
+
+    # - role: stash
+    #   tags:
+    #     - stash
+ 
+  tasks:
+    - hostname:
+        name: controller.local 

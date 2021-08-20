@@ -1,0 +1,7 @@
+---
+
+- name: ensure packages status
+  package:
+    name: "{{ item.key }}"
+    state: "{{ item.value }}"
+  with_dict: "{{ packages }}"

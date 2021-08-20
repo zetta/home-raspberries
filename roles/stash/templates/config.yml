@@ -1,0 +1,23 @@
+---
+
+cache: /media/pi/MEDIA/data/stash/cache
+calculate_md5: true
+config: /home/pi/.stash/config.yml
+database: /home/pi/.stash/stash-go.sqlite
+downloads: /media/pi/MEDIA/data/stash/metadata/downloads
+generated: /media/pi/MEDIA/data/stash/generated
+host: 0.0.0.0
+jwt_secret_key: 9cca02b7d2155aa76fbe038c4155ebaad96c185d9f1baa3cdd955419dfa7e73b
+max_session_age: 3600
+metadata: /media/pi/MEDIA/data/stash/metadata
+plugins_path: /home/pi/.stash/plugins
+port: 2334
+preview_exclude_end: "0"
+preview_exclude_start: "0"
+preview_segment_duration: 0.75
+preview_segments: 12
+scrapers_path: /home/pi/.stash/scrapers
+session_store_key: d880ac5d32285ccdd66eb48c654798d44b8db543df2f2cdf81f8292b55c8f1bf
+stash:
+- /media/pi/MEDIA/pron
+video_file_naming_algorithm: OSHASH

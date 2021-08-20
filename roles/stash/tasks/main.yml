@@ -1,0 +1,66 @@
+---
+
+- name: install dependencies
+  package:
+    name: ffmpeg
+    state: present
+
+- name: Download stash media server
+  get_url:
+    url: https://github.com/stashapp/stash/releases/download/v0.4.0/stash-linux-arm32v7
+    dest: "{{ stash_installation_path }}/stash-linux"
+
+- name: Make the file executable
+  file:
+    path: "{{ stash_installation_path }}/stash-linux"
+    mode: 0755
+
+- name: create config file
+  template: 
+    src: config.yml
+    dest: /home/pi/.stash/config.yml
+    owner: pi
+    group: pi 
+    mode: 0644
+
+- name: create unit file
+  template: 
+    src: stash.service.j2 
+    dest: /lib/systemd/system/stash.service 
+    mode: 0644
+  notify:
+    - reload systemctl
+
+- file:
+    src: /usr/bin/ffmpeg
+    dest: /home/pi/.stash/ffmpeg
+    owner: pi
+    group: pi
+    state: link
+
+- file:
+    src: /usr/bin/ffprobe
+    dest: /home/pi/.stash/ffprobe
+    owner: pi
+    group: pi
+    state: link
+
+- name: create directories
+  file: 
+    dest: "{{ stash_data_path }}/{{ item }}"
+    owner: pi
+    group: pi
+    mode: 755
+    state: directory
+    recurse: yes
+  with_items:
+    - generated
+    - cache
+    - metadata
+
+
+- name: start stash service
+  service: 
+    name: stash
+    state: started 
+    enabled: yes

@@ -1,0 +1,15 @@
+[Unit]
+Description=Stash Media Server
+Requires=network.target
+After=syslog.target network.target
+
+[Service]
+Type=simple
+ExecStart={{ stash_installation_path }}/stash-linux -c /home/pi/.stash/config.yml
+Restart=on-failure
+User=pi
+#PIDFile=/var/lock/stash.pid
+
+
+[Install]
+WantedBy=multi-user.target

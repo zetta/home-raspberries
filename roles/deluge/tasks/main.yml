@@ -1,0 +1,41 @@
+---
+
+- name: install packages
+  package:
+    name: "{{ item }}"
+    state: present
+  with_items:
+    - deluge
+    - deluge-common
+    - deluge-console
+    - deluge-web
+    - deluged
+
+- name: ensure service is up
+  service: 
+    name: deluged
+    state: started
+
+- name: create systemd service
+  copy: 
+    dest: /etc/systemd/system/deluge-web.service
+    content: |
+      [Unit]
+      Description=Deluge Bittorrent Client Web Interface
+      After=network-online.target
+
+      [Service]
+      Type=simple
+      User=ubuntu
+      Group=ubuntu
+      UMask=027
+      ExecStart=/usr/bin/deluge-web -d
+      Restart=on-failure
+
+      [Install]
+      WantedBy=multi-user.target
+
+- name: ensure service is up
+  service: 
+    name: deluge-web
+    state: started

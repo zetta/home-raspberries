@@ -1,0 +1,17 @@
+---
+
+- hosts: plex.local
+  become: yes
+  # roles: 
+    # - mount
+    # - plexmediaserver
+    # - deluge
+    # - rpimonitor
+
+
+    # - role: stash
+    #   tags:
+    #     - stash
+  tasks:
+    - hostname:
+        name: plex.local 

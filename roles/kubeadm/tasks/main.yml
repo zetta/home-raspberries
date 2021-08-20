@@ -1,0 +1,51 @@
+---
+
+- name: Update apt package
+  apt:
+    update_cache: yes
+
+- name: Ensure apt-transport-https package is present 
+  package:
+    name: apt-transport-https
+    state: present
+
+- name: Ensure ca-certificates package is present 
+  package:
+    name: ca-certificates
+    state: present
+
+- name: Ensure curl package is present 
+  package:
+    name: curl
+    state: present
+
+- name: Download the Google Cloud public signing key
+  get_url: 
+    url: https://packages.cloud.google.com/apt/doc/apt-key.gpg
+    dest: /usr/share/keyrings/kubernetes-archive-keyring.gpg
+
+- name: Add Kubernetes apt repository
+  copy:
+    dest: /etc/apt/sources.list.d/kubernetes.list
+    content: |
+      deb [signed-by=/usr/share/keyrings/kubernetes-archive-keyring.gpg] https://apt.kubernetes.io/ kubernetes-xenial main
+
+- name: Update apt package
+  apt:
+    update_cache: yes
+
+
+- name: Ensure kubelet package is present 
+  package:
+    name: kubelet
+    state: present
+
+- name: Ensure kubeadm package is present 
+  package:
+    name: kubeadm
+    state: present
+
+- name: Ensure kubectl package is present 
+  package:
+    name: kubectl
+    state: present
